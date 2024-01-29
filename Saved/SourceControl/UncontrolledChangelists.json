@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"C:/Unreal Projects/CandleLit/Content/StarterContent/Architecture/Floor_400x400.uasset",
+				"C:/Unreal Projects/CandleLit/Content/TopDown/Blueprints/BP_TopDownController.uasset",
+				"C:/Unreal Projects/CandleLit/Content/Input/Actions/IA_SetDestination_Click.uasset",
+				"C:/Unreal Projects/CandleLit/Content/Input/Actions/IA_SetDestination_Touch.uasset",
+				"C:/Unreal Projects/CandleLit/Content/Input/IMC_Default.uasset",
+				"C:/Unreal Projects/CandleLit/Content/TopDown/Input/IMC_Default.uasset",
+				"C:/Unreal Projects/CandleLit/Content/TopDown/Input/Actions/IA_SetDestination_Touch.uasset",
+				"C:/Unreal Projects/CandleLit/Content/TopDown/Input/Actions/IA_SetDestination_Click.uasset",
+				"C:/Unreal Projects/CandleLit/Content/TopDown/Blueprints/BP_TopDownGameMode.uasset",
+				"C:/Unreal Projects/CandleLit/Content/Blueprints/BP_TopDownCharacter.uasset",
+				"C:/Unreal Projects/CandleLit/Content/Blueprints/BP_TopDownController.uasset",
+				"C:/Unreal Projects/CandleLit/Content/TopDown/Blueprints/BP_TopDownCharacter.uasset",
+				"C:/Unreal Projects/CandleLit/Content/TopDown/Maps/TopDownMap.umap"
+			]
+		}
+	]
+}
