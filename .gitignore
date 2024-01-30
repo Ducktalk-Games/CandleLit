@@ -1,0 +1,17 @@
+DerivedDataCache
+Intermediate
+Saved
+/Plugins/Developer
+.vscode
+.vs
+*.VC.db
+*.opensdf
+*.opendb
+*.sdf
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+gen_temp.engine_emp
+ProjCult.sublime-project
+ProjCult.sublime-workspace
