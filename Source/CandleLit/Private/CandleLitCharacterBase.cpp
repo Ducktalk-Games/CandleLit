@@ -135,3 +135,8 @@ void ACandleLitCharacterBase::Dissolve()
 		StartWeaponDissolveTimeline(DynamicMatInst);
 	}
 }
+
+void ACandleLitCharacterBase::SetCurrentCameraVolume(ACameraVolume* NewZone)
+{
+	CurrentCameraVolume = NewZone;
+}

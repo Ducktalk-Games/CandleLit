@@ -6,6 +6,7 @@
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "Interfaces/CombatInterface.h"
+#include "Actors/CameraVolume.h"
 #include "CandleLitCharacterBase.generated.h"
 
 
@@ -91,6 +92,15 @@ protected:
 	TObjectPtr<UMaterialInstance> DissolveMaterialInstance;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
+
+public:
+	UFUNCTION(BlueprintCallable, Category ="Camera")
+	void SetCurrentCameraVolume(ACameraVolume* NewZone);
+	UFUNCTION(BlueprintCallable, Category ="Camera")
+	ACameraVolume* GetCurrentCameraVolume() {return CurrentCameraVolume; }
+
+	UPROPERTY()	
+	TObjectPtr<ACameraVolume> CurrentCameraVolume;
 
 private:
 	UPROPERTY(EditAnywhere, Category ="Abilities")

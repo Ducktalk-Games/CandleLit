@@ -8,9 +8,9 @@ public class CandleLit : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput","NavigationSystem","Niagara", "GameplayAbilities","GameplayTags" , "AIModule" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput","NavigationSystem","Niagara", "GameplayAbilities","GameplayTags" , "AIModule", "CinematicCamera" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags" ,"GameplayTasks", "UMG"});
+		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags" ,"GameplayTasks", "UMG", "CinematicCamera"});
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
