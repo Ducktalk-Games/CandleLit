@@ -35,7 +35,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidge
 
 
 
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class CANDLELIT_API UOverlayWidgetController : public UCL_WidgetController
 {
 	GENERATED_BODY()

@@ -35,23 +35,39 @@ void ACL_PlayerController::ShowDamageNumber_Implementation(float DamageAmount, A
 	// }
 }
 
+void ACL_PlayerController::JumpPressed()
+{
+	bJumpKeyDown = true;
+	if(IsValid(GetCharacter())) GetCharacter()->Jump();
+}
+
+
+void ACL_PlayerController::JumpReleased()
+{
+	bJumpKeyDown = true;
+	if(IsValid(GetCharacter())) GetCharacter()->StopJumping();
+}
+
+
 void ACL_PlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-	UCL_InputComponent* AuraInputComponent = CastChecked<UCL_InputComponent>(InputComponent);
-
-	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACL_PlayerController::Move);
-	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &ACL_PlayerController::ShiftPressed);
-	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &ACL_PlayerController::ShiftReleased);
-	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
-
+	if(UCL_InputComponent* CandleInputComponent = Cast<UCL_InputComponent>(InputComponent))
+	{
+		CandleInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACL_PlayerController::Move);
+		CandleInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACL_PlayerController::JumpPressed);
+		CandleInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACL_PlayerController::JumpReleased);
+		CandleInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &ACL_PlayerController::ShiftPressed);
+		CandleInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &ACL_PlayerController::ShiftReleased);
+		CandleInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
+	}
 }
 
 void ACL_PlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 	CursorTrace();
-	AutoRun();
+	// AutoRun();
 }
 
 void ACL_PlayerController::Move(const FInputActionValue& InputActionValue)

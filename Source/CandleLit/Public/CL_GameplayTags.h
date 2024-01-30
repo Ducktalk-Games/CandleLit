@@ -25,6 +25,9 @@ public:
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 	
 	FGameplayTag Effects_HitReact;
+	
+	FGameplayTag Abilities_Active_Action;
+	FGameplayTag Abilities_Passive_Action;
 
 	FGameplayTag Montage_Interaction;
 	FGameplayTag Montage_Event;

@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/CL_PlayerController.h"
 #include "Player/CL_PlayerState.h"
+#include "UI/HUD/CL_HUD.h"
 
 
 // Sets default values
@@ -57,12 +58,12 @@ void ACL_Character::InitAbilityActorInfo()
 	AbilitySystemComponent = CLPlayerState->GetAbilitySystemComponent();
 	AttributeSet = CLPlayerState->GetAttributeSet();
 
-	if(ACL_PlayerController* AuraPlayerController = Cast<ACL_PlayerController>(GetController()))
+	if(ACL_PlayerController* CLPlayerController = Cast<ACL_PlayerController>(GetController()))
 	{
-		// if(AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
-		// {
-		// 	AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState,AbilitySystemComponent, AttributeSet);
-		// }
+		if(ACL_HUD* CLHUD = Cast<ACL_HUD>(CLPlayerController->GetHUD()))
+		{
+			CLHUD->InitOverlay(CLPlayerController, CLPlayerState,AbilitySystemComponent, AttributeSet);
+		}
 	}
 
 	InitializeDefaultAttributes();

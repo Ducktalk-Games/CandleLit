@@ -42,6 +42,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction>  MoveAction;
 	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction>  JumpAction;
+	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> ShiftAction;
 
 	bool bShiftKeyDown = false;
@@ -49,6 +51,11 @@ private:
 	void ShiftReleased() {bShiftKeyDown = false; };
 
 	void Move(const FInputActionValue& InputActionValue);
+	
+	bool bJumpKeyDown = false;
+	void JumpPressed() ;
+	void JumpReleased() ;
+
 	void AutoRun();	
 
 	void CursorTrace();
@@ -84,3 +91,5 @@ private:
 	// TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 
 };
+
+

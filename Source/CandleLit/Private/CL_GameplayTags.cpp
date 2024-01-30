@@ -12,6 +12,9 @@ void FCL_GameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Attributes_Secondary_MaxHealth = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Secondary.MaxHealth"),
 		FString(""));
+	GameplayTags.Attributes_Secondary_MaxOxygen = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Secondary.MaxOxygen"),
+		FString(""));
 
 	// Input Tags
 	GameplayTags.InputTag_LMB = UGameplayTagsManager::Get().AddNativeGameplayTag(
@@ -45,7 +48,17 @@ void FCL_GameplayTags::InitializeNativeGameplayTags()
 		FName("Effects.HitReact"),
 		FString("Tag granted when hit reacting"));
 
+	/*
+	 * Actions
+	 */
 	
+	GameplayTags.Abilities_Active_Action = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.ActiveAction"),
+		FString("Action started ability tag"));
+	GameplayTags.Abilities_Passive_Action = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.PassiveAction"),
+		FString("Passive ability tag"));
+
 	/*
 	 * Montages
 	 */

@@ -105,6 +105,7 @@ void ACandleLitCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Gam
 
 void ACandleLitCharacterBase::InitializeDefaultAttributes() const
 {
+	ApplyEffectToSelf(DefaultPrimaryAttributes);
 	ApplyEffectToSelf(DefaultVitalAttributes);
 }
 
