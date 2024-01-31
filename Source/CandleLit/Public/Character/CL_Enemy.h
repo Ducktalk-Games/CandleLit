@@ -63,9 +63,13 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Combat")
 	bool bHitReacting;
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	bool bExtinguished = true;
+	UFUNCTION(BlueprintCallable, Category=  "Combat")
+	void SetIsExtinguished(const bool Extinguished);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
-	float BaseWalkSpeed = 250.f;
+	float BaseWalkSpeed = 400.f;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
 	TObjectPtr<AActor> CombatTarget;

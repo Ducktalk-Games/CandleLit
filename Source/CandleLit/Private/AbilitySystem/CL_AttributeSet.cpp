@@ -7,6 +7,7 @@
 #include "CL_GameplayTags.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/CombatInterface.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/CL_PlayerController.h"
 
@@ -34,12 +35,38 @@ void UCL_AttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, f
 	if(Attribute == GetHealthAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
+		
+	}
+	if(Attribute == GetOxygenAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxOxygen());
 	}
 }
 
 void UCL_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
+	
+	FEffectProperties Props;
+	SetEffectProperties(Data, Props);
+
+	if(Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp(GetHealth(), 0, GetMaxHealth()));
+		HealthChanged.Broadcast(GetHealth());
+		if(GetHealth() <= 0.f)
+		{
+			if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
+			{
+				CombatInterface->Die();
+			}
+		}
+	}
+	if(Data.EvaluatedData.Attribute == GetOxygenAttribute())
+	{
+		SetOxygen(FMath::Clamp(GetOxygen(), 0, GetMaxOxygen()));
+		OxygenChanged.Broadcast(GetOxygen());
+	}
 }
 
 void UCL_AttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const

@@ -57,6 +57,8 @@ struct FEffectProperties
 	ACharacter* TargetCharacter{nullptr};
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedDelegate, float, Amount);
+
 // Typedef is specific to the FGameplayAttribute() signature but TStaticFuncPtr is generic to any signature
 //typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr FAttributeFuncPtr;
 template<class T>
@@ -86,6 +88,7 @@ class CANDLELIT_API UCL_AttributeSet : public UAttributeSet
 	ATTRIBUTE_ACCESSORS(UCL_AttributeSet, Health);
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
+	FOnAttributeChangedDelegate HealthChanged;
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing=OnRep_MaxHealth, Category= "VitalAttributes")
 	FGameplayAttributeData MaxHealth;
@@ -98,7 +101,7 @@ class CANDLELIT_API UCL_AttributeSet : public UAttributeSet
 	ATTRIBUTE_ACCESSORS(UCL_AttributeSet, Oxygen);
 	UFUNCTION()
 	void OnRep_Oxygen(const FGameplayAttributeData& OldHealth) const;
-
+	FOnAttributeChangedDelegate OxygenChanged;
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing=OnRep_MaxOxygen, Category= "VitalAttributes")
 	FGameplayAttributeData MaxOxygen;
 	ATTRIBUTE_ACCESSORS(UCL_AttributeSet, MaxOxygen);

@@ -5,6 +5,7 @@
 
 #include "CL_GameplayTags.h"
 #include "AbilitySystem/CL_AbilitySystemComponent.h"
+#include "AbilitySystem/CL_AttributeSet.h"
 #include "Components/CapsuleComponent.h"
 
 
@@ -26,6 +27,7 @@ ACandleLitCharacterBase::ACandleLitCharacterBase()
 void ACandleLitCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+	CastChecked<UCL_AttributeSet>(GetAttributeSet())->OxygenChanged.AddDynamic(this, &ThisClass::OnOxygenChanged);
 }
 
 UAbilitySystemComponent* ACandleLitCharacterBase::GetAbilitySystemComponent() const
@@ -47,6 +49,7 @@ FVector ACandleLitCharacterBase::GetCombatSocketLocation_Implementation(const FG
 	}
 	return FVector();
 }
+
 
 void ACandleLitCharacterBase::Die()
 {
@@ -84,6 +87,10 @@ void ACandleLitCharacterBase::MulticastHandleDeath_Implementation()
 TArray<FTaggedMontage> ACandleLitCharacterBase::GetAttackMontages_Implementation()
 {
 	return AttackMontages;
+}
+
+void ACandleLitCharacterBase::OnOxygenChanged_Implementation(float Amount)
+{
 }
 
 void ACandleLitCharacterBase::InitAbilityActorInfo()

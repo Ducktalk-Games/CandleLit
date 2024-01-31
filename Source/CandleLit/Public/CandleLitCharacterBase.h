@@ -34,7 +34,7 @@ public:
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 
 	FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
-
+	
 	virtual void Die() override;
 
 	virtual bool IsDead_Implementation() const override;
@@ -53,6 +53,9 @@ public:
 protected:
 
 	bool bDead;
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Oxygen")
+	void OnOxygenChanged(float Amount);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category ="Combat")
 	TObjectPtr<USkeletalMeshComponent> Flame;
