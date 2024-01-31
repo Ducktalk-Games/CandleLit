@@ -49,6 +49,10 @@ protected:
 	float BlendExp = 0.f;
 	UPROPERTY(EditAnywhere, Category = "Zone")
 	bool bBlockOutGoing = false;
+	UPROPERTY(EditAnywhere, Category = "Zone")
+	FVector Offset {FVector()};
+	UPROPERTY(EditAnywhere, Category = "Zone")
+	float MaxFollowDistance = 900.f;
 	
 	UFUNCTION(BlueprintCallable, Category = "Camera")
 	void FollowCharacterOnSpline(float DeltaTime);

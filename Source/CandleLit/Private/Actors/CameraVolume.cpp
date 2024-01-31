@@ -5,6 +5,7 @@
 
 #include "CandleLitCharacterBase.h"
 #include "Camera/CameraComponent.h"
+#include "Character/CL_Character.h"
 #include "Components/SplineComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -61,17 +62,31 @@ void ACameraVolume::FollowCharacterOnSpline(float DeltaTime)
 {
 	if(Character)
 	{
-		// find look at rotation
 		const FVector CameraLocation = Camera->GetComponentLocation();
 		const FVector CharacterLocation = Character->GetActorLocation();
+
+		const FVector OffsetPosition = CharacterLocation + Character->GetActorForwardVector() * Offset;
 		
+
+		// Calculate rotation to look at the offset position
 		const FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(CameraLocation, CharacterLocation);
 		const FRotator CameraRotation = Camera->GetComponentRotation();
 		const FRotator InterpToRotation = FMath::RInterpTo(CameraRotation, LookAtRotation, DeltaTime, RotationInterpSpeed);
-		const FVector LocationClosestToWorldLocation = GetRailSplineComponent()->FindLocationClosestToWorldLocation(CharacterLocation, ESplineCoordinateSpace::World); 
-		const FVector InterpToLocation = FMath::VInterpTo(CameraLocation, LocationClosestToWorldLocation,DeltaTime, CameraMovementSpeed);
+
+		// Find the closest point on the spline to the offset position
+		const FVector LocationClosestToWorldLocation = GetRailSplineComponent()->FindLocationClosestToWorldLocation(CharacterLocation + FVector(-MaxFollowDistance, 0, MaxFollowDistance), ESplineCoordinateSpace::World);
+
+		// Push Camera back
+
+
+		const FVector IdealPosition = LocationClosestToWorldLocation ;
 		
-		RailCameraMount->SetWorldLocationAndRotation(InterpToLocation, InterpToRotation);
+		// Interpolate camera location towards the closest point on the spline
+		const FVector InterpToLocation = FMath::VInterpTo(CameraLocation, IdealPosition, DeltaTime, CameraMovementSpeed);
+
+		// 
+		// Set the camera location and rotation
+		Camera->SetWorldLocationAndRotation(InterpToLocation, InterpToRotation);
 	}
 }
 
