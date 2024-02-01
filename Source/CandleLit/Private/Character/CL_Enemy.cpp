@@ -10,6 +10,7 @@
 #include "AbilitySystem/CL_AttributeSet.h"
 #include "AI/CL_AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "CandleLit/CandleLit.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTree.h"
@@ -52,44 +53,58 @@ void ACL_Enemy::PossessedBy(AController* NewController)
 
 void ACL_Enemy::HighlightActor()
 {
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	Flame->SetRenderCustomDepth(true);
+	Flame->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 }
 
 void ACL_Enemy::UnHighLightActor()
 {
+	GetMesh()->SetRenderCustomDepth(false);
+	Flame->SetRenderCustomDepth(false);
 }
 
 void ACL_Enemy::SetCombatTarget_Implementation(AActor* InCombatTarget)
 {
-	IEnemyInterface::SetCombatTarget_Implementation(InCombatTarget);
+	CombatTarget = InCombatTarget;
 }
 
 AActor* ACL_Enemy::GetCombatTarget_Implementation() const
 {
-	return IEnemyInterface::GetCombatTarget_Implementation();
+	return CombatTarget;
 }
 
 int32 ACL_Enemy::GetPlayerLevel()
 {
-	return Super::GetPlayerLevel();
+	return Level;
 }
 
 void ACL_Enemy::Die()
 {
+	SetLifeSpan(LifeSpan);
 	Super::Die();
 }
 
 void ACL_Enemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 {
+	bHitReacting = NewCount >0;
+	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0: BaseWalkSpeed;
+	if( CL_AIController && CL_AIController->GetBlackboardComponent()) CL_AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
 }
 
 void ACL_Enemy::InitAbilityActorInfo()
 {
-	Super::InitAbilityActorInfo();
+	check(AbilitySystemComponent);
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UCL_AbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+
+	if(HasAuthority()) InitializeDefaultAttributes();
 }
 
 void ACL_Enemy::InitializeDefaultAttributes() const
 {
-	Super::InitializeDefaultAttributes();
+	UCL_AbilitySystemLibrary::InitializeDefaultAttributes(this, CharacterType, Level, AbilitySystemComponent);
 }
 
 // Called when the game starts or when spawned

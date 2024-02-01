@@ -3,6 +3,9 @@
 
 #include "AI/CL_AIController.h"
 
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+
 
 // Sets default values
 ACL_AIController::ACL_AIController()

@@ -56,6 +56,7 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "Camera")
 	void FollowCharacterOnSpline(float DeltaTime);
+
 private:
 	
 	APlayerController* Controller;
