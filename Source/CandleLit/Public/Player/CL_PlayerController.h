@@ -51,6 +51,8 @@ private:
 	void ShiftReleased() {bShiftKeyDown = false; };
 
 	void Move(const FInputActionValue& InputActionValue);
+
+
 	
 	bool bJumpKeyDown = false;
 	void JumpPressed() ;
@@ -87,9 +89,12 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USplineComponent> Spline;
 
-	// UPROPERTY(EditDefaultsOnly, Category="Damage")
-	// TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
-
+public:
+	
+	UPROPERTY(BlueprintReadWrite)
+	bool CanJump = true;
+	
+	
 };
 
 

@@ -11,6 +11,7 @@
 #include "AbilitySystem/CL_AbilitySystemComponent.h"
 #include "Components/SplineComponent.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Input/CL_InputComponent.h"
 #include "Interfaces/EnemyInterface.h"
 
@@ -25,26 +26,25 @@ ACL_PlayerController::ACL_PlayerController()
 void ACL_PlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter,
 	bool bBlockedHit, bool bCriticalHit)
 {
-	// if(IsValid(TargetCharacter) && DamageTextComponentClass && IsLocalController())
-	// {
-	// 	UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass);
-	// 	DamageText->RegisterComponent();
-	// 	DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
-	// 	DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-	// 	DamageText->SetDamageText(DamageAmount, bBlockedHit, bCriticalHit);
-	// }
+	
 }
 
 void ACL_PlayerController::JumpPressed()
 {
 	bJumpKeyDown = true;
 	if(IsValid(GetCharacter())) GetCharacter()->Jump();
+	if(CanJump)
+	{
+		GetCharacter()->LaunchCharacter(FVector(0,0,720.f), false, false);
+		GetCharacter()->GetCharacterMovement()->GravityScale = 1.8;
+		CanJump = false;
+	}
 }
 
 
 void ACL_PlayerController::JumpReleased()
 {
-	bJumpKeyDown = true;
+	bJumpKeyDown = false;
 	if(IsValid(GetCharacter())) GetCharacter()->StopJumping();
 }
 
@@ -123,7 +123,6 @@ void ACL_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 	if(InputTag.MatchesTagExact(FCL_GameplayTags::Get().InputTag_LMB))
 	{
 		bTargeting = ThisActor ? true : false;
-		bAutoRunning = false;
 	}
 }
 
@@ -137,33 +136,7 @@ void ACL_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 	if(GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
 	
-	if(!bTargeting && !bShiftKeyDown)
-	{
-		const APawn* ControlledPawn = GetPawn();
-		if(FollowTime <= ShortPressThreshold && ControlledPawn)
-		{
-			if(UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this,
-				ControlledPawn->GetActorLocation(),
-				CachedDestination
-				))
-			{
-				Spline->ClearSplinePoints();
-				for(FVector& PointLoc : NavPath->PathPoints)
-				{
-					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
-					
-				}
-				if(NavPath->PathPoints.Num() > 0)
-				{
-					CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() -1];
-					bAutoRunning = true;	
-				}
-				
-			}
-		}
-		FollowTime = 0.f;
-		bTargeting = false;
-	}
+	
 }
 
 void ACL_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
@@ -178,17 +151,6 @@ void ACL_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	{
 		if(GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
 	}
-	else
-	{
-		FollowTime += GetWorld()->GetDeltaSeconds();
-		if(CursorHit.bBlockingHit) CachedDestination = CursorHit.ImpactPoint;
-
-		if(APawn* ControlledPawn = GetPawn())
-		{
-			const FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
-			ControlledPawn->AddMovementInput(WorldDirection);
-		}
-	}
 }
 
 UCL_AbilitySystemComponent* ACL_PlayerController::GetASC()
@@ -199,6 +161,9 @@ UCL_AbilitySystemComponent* ACL_PlayerController::GetASC()
 	}
 	return CL_AbilitySystemComponent;	
 }
+
+
+
 
 // Called when the game starts or when spawned
 void ACL_PlayerController::BeginPlay()
@@ -219,6 +184,5 @@ void ACL_PlayerController::BeginPlay()
 	SetInputMode(InputModeData);
 
 	GetASC();
-	
 }
 

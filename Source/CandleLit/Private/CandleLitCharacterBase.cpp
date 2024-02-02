@@ -7,6 +7,8 @@
 #include "AbilitySystem/CL_AbilitySystemComponent.h"
 #include "AbilitySystem/CL_AttributeSet.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Player/CL_PlayerController.h"
 
 
 ACandleLitCharacterBase::ACandleLitCharacterBase()
