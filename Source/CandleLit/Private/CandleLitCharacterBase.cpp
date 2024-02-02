@@ -27,6 +27,7 @@ ACandleLitCharacterBase::ACandleLitCharacterBase()
 void ACandleLitCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	CastChecked<UCL_AttributeSet>(GetAttributeSet())->OxygenChanged.AddDynamic(this, &ThisClass::OnOxygenChanged);
 }
 

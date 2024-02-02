@@ -88,6 +88,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "AI")
 	TObjectPtr<UBehaviorTree> BehaviorTree;
-	UPROPERTY()
+	
 	TObjectPtr<ACL_AIController> CL_AIController;
 };

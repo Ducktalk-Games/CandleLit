@@ -16,7 +16,6 @@
 #include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTree.h"
 
 
-// Sets default values
 ACL_Enemy::ACL_Enemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -47,7 +46,7 @@ void ACL_Enemy::PossessedBy(AController* NewController)
 	CL_AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 	CL_AIController->RunBehaviorTree(BehaviorTree);
 	CL_AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), false);
-	CL_AIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), bDead);
+	// CL_AIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), bDead);
 	CL_AIController->GetBlackboardComponent()->SetValueAsBool(FName("Extinguished"), bExtinguished);
 	
 }
@@ -93,7 +92,6 @@ void ACL_Enemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCoun
 	bHitReacting = NewCount >0;
 	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0: BaseWalkSpeed;
 	if( CL_AIController && CL_AIController->GetBlackboardComponent()) CL_AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
-	
 }
 
 void ACL_Enemy::SetIsExtinguished(const bool Extinguished)
@@ -125,11 +123,6 @@ void ACL_Enemy::BeginPlay()
 	InitAbilityActorInfo();
 	if(HasAuthority()) UCL_AbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent, CharacterType);
 	
-	// if(UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
-	// {
-	// 	AuraUserWidget->SetWidgetController(this);
-	// }
-	//
 	if(const UCL_AttributeSet* AuraAS = Cast<UCL_AttributeSet>(AttributeSet))
 	{
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAS->GetHealthAttribute()).AddLambda(

@@ -52,7 +52,7 @@ public:
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
 protected:
 
-	bool bDead;
+	bool bDead = false;
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Oxygen")
 	void OnOxygenChanged(float Amount);
