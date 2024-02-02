@@ -4,6 +4,7 @@
 #include "Character/CL_Character.h"
 
 #include "AbilitySystem/CL_AbilitySystemComponent.h"
+#include "AbilitySystem/CL_AttributeSet.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/CL_PlayerController.h"
 #include "Player/CL_PlayerState.h"
@@ -65,7 +66,7 @@ void ACL_Character::InitAbilityActorInfo()
 			CLHUD->InitOverlay(CLPlayerController, CLPlayerState,AbilitySystemComponent, AttributeSet);
 		}
 	}
-
+	
 	InitializeDefaultAttributes();
 }
 
@@ -73,7 +74,18 @@ void ACL_Character::InitAbilityActorInfo()
 void ACL_Character::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if(UCL_AttributeSet* AS = Cast<UCL_AttributeSet>(AttributeSet))
+	{
+		AS->HealthChanged.AddDynamic(this, &ThisClass::HealthChanged);
+	}
+}
+
+void ACL_Character::HealthChanged(float NewValue)
+{
+	if(NewValue <= 0.f)
+	{
+		K2_RespawnCharacter();
+	}
 }
 
 // Called every frame

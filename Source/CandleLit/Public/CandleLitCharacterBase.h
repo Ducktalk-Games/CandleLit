@@ -77,7 +77,8 @@ protected:
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level = 1.f) const;
-	
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	virtual void InitializeDefaultAttributes() const;
 
 	void AddCharacterAbilities() const;

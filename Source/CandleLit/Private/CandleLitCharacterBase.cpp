@@ -59,6 +59,7 @@ void ACandleLitCharacterBase::Die()
 	Flame->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
 	MulticastHandleDeath();
 	bDead = true;
+	
 }
 
 bool ACandleLitCharacterBase::IsDead_Implementation() const

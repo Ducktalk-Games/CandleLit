@@ -52,6 +52,7 @@ public:
 	virtual void Die() override;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float LifeSpan = 5.f;
+
 #pragma endregion CombatInterface
 
 	UPROPERTY(BlueprintAssignable)

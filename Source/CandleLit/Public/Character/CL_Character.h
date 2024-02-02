@@ -20,6 +20,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	void HealthChanged(float NewValue);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_RespawnCharacter();
 	
 public:
 	virtual void PossessedBy(AController* NewController) override;
@@ -29,4 +33,5 @@ public:
 
 private:
 	virtual void InitAbilityActorInfo() override;
+	
 };

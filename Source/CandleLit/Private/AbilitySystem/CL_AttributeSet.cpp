@@ -53,13 +53,6 @@ void UCL_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0, GetMaxHealth()));
 		HealthChanged.Broadcast(GetHealth());
-		if(GetHealth() <= 0.f)
-		{
-			if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
-			{
-				
-			}
-		}
 	}
 	if(Data.EvaluatedData.Attribute == GetOxygenAttribute())
 	{
