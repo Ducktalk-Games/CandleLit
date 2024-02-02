@@ -84,7 +84,7 @@ void ACL_Enemy::Die()
 {
 	// SetLifeSpan(LifeSpan);
 	if( CL_AIController && CL_AIController->GetBlackboardComponent()) CL_AIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), bDead);
-	Super::Die();
+	// Super::Die();
 }
 
 void ACL_Enemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)

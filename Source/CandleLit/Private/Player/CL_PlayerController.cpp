@@ -119,7 +119,7 @@ void ACL_PlayerController::CursorTrace()
 }
 
 void ACL_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
-{
+{ 
 	if(InputTag.MatchesTagExact(FCL_GameplayTags::Get().InputTag_LMB))
 	{
 		bTargeting = ThisActor ? true : false;
@@ -161,9 +161,6 @@ UCL_AbilitySystemComponent* ACL_PlayerController::GetASC()
 	}
 	return CL_AbilitySystemComponent;	
 }
-
-
-
 
 // Called when the game starts or when spawned
 void ACL_PlayerController::BeginPlay()

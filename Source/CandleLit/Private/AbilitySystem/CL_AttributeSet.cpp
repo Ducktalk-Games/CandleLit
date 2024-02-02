@@ -35,7 +35,6 @@ void UCL_AttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, f
 	if(Attribute == GetHealthAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
-		
 	}
 	if(Attribute == GetOxygenAttribute())
 	{
@@ -58,7 +57,7 @@ void UCL_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 		{
 			if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
 			{
-				CombatInterface->Die();
+				
 			}
 		}
 	}
@@ -71,18 +70,22 @@ void UCL_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 
 void UCL_AttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
 {
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UCL_AttributeSet, Health, OldHealth);
 }
 
 void UCL_AttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth)
 {
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UCL_AttributeSet, MaxHealth, OldMaxHealth)
 }
 
-void UCL_AttributeSet::OnRep_Oxygen(const FGameplayAttributeData& OldHealth) const
+void UCL_AttributeSet::OnRep_Oxygen(const FGameplayAttributeData& OldOxygen) const
 {
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UCL_AttributeSet, Oxygen, OldOxygen)
 }
 
 void UCL_AttributeSet::OnRep_MaxOxygen(const FGameplayAttributeData& OldMaxOxygen)
 {
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UCL_AttributeSet, Oxygen, OldMaxOxygen)
 }
 
 void UCL_AttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const

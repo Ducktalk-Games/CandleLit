@@ -83,9 +83,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	ECharacterInfo CharacterType = ECharacterInfo::Candle;
 	
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	// TObjectPtr<UWidgetComponent> HealthBar;
-
 	UPROPERTY(EditAnywhere, Category = "AI")
 	TObjectPtr<UBehaviorTree> BehaviorTree;
 	
